@@ -1,10 +1,8 @@
 import express, { Request, Response } from "express";
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.get('/', (req: Request, res: Response) => {
-
-    // com
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
