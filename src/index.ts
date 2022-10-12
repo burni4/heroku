@@ -3,10 +3,14 @@ import express, { Request, Response } from "express"
 const app = express()
 const port = process.env.PORT || 3000
 
-
-
-
 app.get("/", (req: Request, res: Response) => {
+
+    const allMethods = '/showtime /products /addresses';
+
+    res.send(allMethods);
+})
+
+app.get("/showtime", (req: Request, res: Response) => {
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
