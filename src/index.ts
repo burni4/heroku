@@ -14,7 +14,7 @@ app.use('/addresses', addressesRouter);
 
 app.get("/", (req: Request, res: Response) => {
 
-    const allMethods = '/showtime /products /addresses 123';
+    const allMethods = '/showtime /products /addresses';
 
     res.send(allMethods);
 })

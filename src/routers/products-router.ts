@@ -1,24 +1,19 @@
 import {Request, Response, Router} from "express";
+import {productsRepository} from "../repositories/products-repository";
 
 export  const productsRouter = Router({});
 
-const products = [{id : 0,title: 'tomato'},{id : 1,title: 'potato'}];
-
 productsRouter.get('/', (req: Request, res: Response) => {
-    if(req.query.title){
-        let searchString = req.query.title.toString();
-        res.send(products.filter(p=>p.title.indexOf(searchString) > -1));
-    }else{
-        res.send(products);
-    }
+
+    const foundProducts = productsRepository.findProducts(req.query.title?.toString())
+
+    res.send(foundProducts);
 
 })
 
 productsRouter.post('/', (req: Request, res: Response) => {
 
-    const newProduct = {id: +(new Date()), title: req.body.title};
-
-    products.push(newProduct);
+    const newProduct = productsRepository.createProduct(req.body.title)
 
     res.status(201).send(newProduct);
 
@@ -26,7 +21,7 @@ productsRouter.post('/', (req: Request, res: Response) => {
 
 productsRouter.get('/:id', (req: Request, res: Response) => {
 
-    let product = products.find(pr => pr.id === +req.params.id)
+    let product = productsRepository.findProductByID(+req.params.id)
     if (product){
         res.send(product);
     }else{
@@ -37,10 +32,10 @@ productsRouter.get('/:id', (req: Request, res: Response) => {
 
 productsRouter.put('/:id', (req: Request, res: Response) => {
 
-    let product = products.find(pr => pr.id === +req.params.id)
+    const isUpdated = productsRepository.updateProductByID(+req.params.id, req.body.title)
 
-    if (product){
-        product.title = req.body.title;
+    if (isUpdated){
+        const product  = productsRepository.findProducts(req.query.title?.toString());
         res.send(product);
     }else{
         res.send(404);
@@ -50,12 +45,11 @@ productsRouter.put('/:id', (req: Request, res: Response) => {
 
 productsRouter.delete('/:id', (req: Request, res: Response) => {
 
-    for (let i =  0; i < products.length; i++){
-        if(products[i].id === +req.params.id){
-            products.splice(i, 1);
-            res.send(204);
-            return;
-        }
+    const isDeleted = productsRepository.deleteProductByID(+req.params.id)
+
+    if (isDeleted){
+        res.send(204);
+    }else{
+        res.send(404);
     }
-    res.send(404);
 })
