@@ -12,7 +12,7 @@ app.use(parserMiddleware);
 app.use('/products', productsRouter);
 app.use('/addresses', addressesRouter);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/",(req: Request, res: Response) => {
 
     const allMethods = '/showtime /products /addresses';
 
