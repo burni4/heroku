@@ -9,8 +9,8 @@ const titleValidation =  body('title').isLength({min: 1, max: 300}).withMessage(
 
 productsRouter.post('/',
     titleValidation,
-    inputValidationMiddleware
-    ,(req: Request, res: Response) => {
+    inputValidationMiddleware,
+    (req: Request, res: Response) => {
     if(!req.body.title.trim()){
         res.status(400).send({message: 'title is require'})
     }
@@ -43,8 +43,8 @@ productsRouter.get('/:id', (req: Request, res: Response) => {
 
 productsRouter.put('/:id',
     titleValidation,
-    inputValidationMiddleware
-    ,(req: Request, res: Response) => {
+    inputValidationMiddleware,
+    (req: Request, res: Response) => {
 
     const isUpdated = productsRepository.updateProductByID(+req.params.id, req.body.title)
 
