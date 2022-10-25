@@ -1,9 +1,6 @@
-import {productsCollection} from "./db";
+import {productsCollection, ProductType} from "./db";
 
-export type ProductType = {
-    id: number
-    title: string
-}
+
 
 export const productsRepositoryInMemory = {
     async findProducts(searchString: string | null | undefined): Promise<ProductType[]>{

@@ -1,5 +1,9 @@
 import {MongoClient} from "mongodb";
-import {ProductType} from "./products-repository-db";
+
+export type ProductType = {
+    id: number
+    title: string
+}
 
 const mongoURIAtlas: string = ""
 const mongoURILocalhost: string = "mongodb://0.0.0.0:27017"
