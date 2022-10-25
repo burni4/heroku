@@ -49,7 +49,7 @@ productsRouter.put('/:id',
         const isUpdated = await productsRepositoryInMemory.updateProductByID(+req.params.id, req.body.title)
 
         if (isUpdated) {
-            const product = await productsRepositoryInMemory.findProducts(req.query.title?.toString());
+            const product = await productsRepositoryInMemory.findProductByID(+req.params.id);
             res.send(product);
         } else {
             res.send(404);
