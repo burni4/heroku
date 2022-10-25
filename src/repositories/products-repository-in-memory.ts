@@ -1,6 +1,6 @@
 const products = [{id : 0,title: 'tomato'},{id : 1,title: 'potato'}];
 
-export const productsRepository = {
+export const productsRepositoryInMemory = {
     findProducts(searchString: string | null | undefined){
         if(searchString){
             return products.filter(p=>p.title.indexOf(searchString) > -1)
