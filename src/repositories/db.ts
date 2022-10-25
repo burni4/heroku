@@ -1,4 +1,5 @@
 import {MongoClient} from "mongodb";
+import {ProductType} from "./products-repository-db";
 
 const mongoURIAtlas: string = ""
 const mongoURILocalhost: string = "mongodb://0.0.0.0:27017"
@@ -6,6 +7,9 @@ const mongoURILocalhost: string = "mongodb://0.0.0.0:27017"
 const mongoUri = process.env.mongoURI || mongoURIAtlas || mongoURILocalhost;
 
 export const client = new MongoClient(mongoUri)
+
+export const db = client.db("shop")
+export const productsCollection = db.collection<ProductType>("products");
 
 export async function runDb(){
 
