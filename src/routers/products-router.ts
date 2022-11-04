@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
-import {productsRepositoryInMemory} from "../repositories/products-repository-db";
 import {body} from "express-validator";
 import {inputValidationMiddleware} from "../middlewares/input-validation-middleware";
+import {productsService} from "../domain/products-service";
 
 export  const productsRouter = Router({});
 
@@ -15,7 +15,7 @@ productsRouter.post('/',
             res.status(400).send({message: 'title is require'})
         }
 
-        const newProduct = await productsRepositoryInMemory.createProduct(req.body.title)
+        const newProduct = await productsService.createProduct(req.body.title)
 
         res.status(201).send(newProduct);
 
@@ -24,7 +24,7 @@ productsRouter.post('/',
 
 productsRouter.get('/', async (req: Request, res: Response) => {
 
-    const foundProducts = await productsRepositoryInMemory.findProducts(req.query.title?.toString())
+    const foundProducts = await productsService.findProducts(req.query.title?.toString())
 
     res.send(foundProducts);
 
@@ -32,7 +32,7 @@ productsRouter.get('/', async (req: Request, res: Response) => {
 
 productsRouter.get('/:id', async (req: Request, res: Response) => {
 
-    let product = await productsRepositoryInMemory.findProductByID(+req.params.id)
+    let product = await productsService.findProductByID(+req.params.id)
     if (product) {
         res.send(product);
     } else {
@@ -46,10 +46,10 @@ productsRouter.put('/:id',
     inputValidationMiddleware,
     async (req: Request, res: Response) => {
 
-        const isUpdated = await productsRepositoryInMemory.updateProductByID(+req.params.id, req.body.title)
+        const isUpdated = await productsService.updateProductByID(+req.params.id, req.body.title)
 
         if (isUpdated) {
-            const product = await productsRepositoryInMemory.findProductByID(+req.params.id);
+            const product = await productsService.findProductByID(+req.params.id);
             res.send(product);
         } else {
             res.send(404);
@@ -59,7 +59,7 @@ productsRouter.put('/:id',
 
 productsRouter.delete('/:id', async (req: Request, res: Response) => {
 
-    const isDeleted = await productsRepositoryInMemory.deleteProductByID(+req.params.id)
+    const isDeleted = await productsService.deleteProductByID(+req.params.id)
 
     if (isDeleted) {
         res.send(204);
