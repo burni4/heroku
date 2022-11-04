@@ -8,13 +8,12 @@ export const productsRepositoryInDB = {
         }
         return productsCollection.find(filter).toArray()
     },
-    async createProduct(title: string): Promise<ProductType>{
-            const newProduct = {id: +(new Date()), title};
-            const result = await productsCollection.insertOne(newProduct)
-            return newProduct;
-        },
     async findProductByID(id: number): Promise<ProductType | null> {
         return await productsCollection.findOne({id: id});
+    },
+    async createProduct(newProduct: ProductType): Promise<ProductType>{
+            const result = await productsCollection.insertOne(newProduct)
+            return newProduct
     },
     async updateProductByID(id: number, title: string): Promise<boolean>{
 

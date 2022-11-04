@@ -1,31 +1,22 @@
 import {productsRepositoryInDB} from "../repositories/products-repository-db";
-import {productsCollection, ProductType} from "../repositories/db";
+import {ProductType} from "../repositories/db";
 
 export const productsService = {
     async findProducts(searchString: string | null | undefined): Promise<ProductType[]>{
-        let filter: any = {};
-        if (searchString) {
-            filter.title = {$regex: searchString}
-        }
-        return productsCollection.find(filter).toArray()
+        return productsRepositoryInDB.findProducts(searchString)
+    },
+    async findProductByID(id: number): Promise<ProductType | null> {
+        return productsRepositoryInDB.findProductByID(id)
     },
     async createProduct(title: string): Promise<ProductType>{
         const newProduct = {id: +(new Date()), title};
-        const result = await productsCollection.insertOne(newProduct)
-        return newProduct;
-    },
-    async findProductByID(id: number): Promise<ProductType | null> {
-        return await productsCollection.findOne({id: id});
+        const  createdProduct: ProductType = await productsRepositoryInDB.createProduct(newProduct)
+        return createdProduct;
     },
     async updateProductByID(id: number, title: string): Promise<boolean>{
-
-        const result = await productsCollection.updateOne({id: id}, {$set: {title: title}})
-
-        return result.matchedCount === 1
-
+        return await productsRepositoryInDB.updateProductByID(id, title)
     },
     async deleteProductByID(id: number): Promise<boolean>{
-        const result = await productsCollection.deleteOne({id: id})
-        return result.deletedCount === 1;
+        return productsRepositoryInDB.deleteProductByID(id)
     },
 }
