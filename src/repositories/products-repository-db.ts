@@ -1,7 +1,5 @@
 import {productsCollection, ProductType} from "./db";
 
-
-
 export const productsRepositoryInMemory = {
     async findProducts(searchString: string | null | undefined): Promise<ProductType[]>{
         let filter: any = {};
