@@ -4,6 +4,7 @@ import {productsRouter} from "./routers/products-router";
 import {addressesRouter} from "./routers/addresses-router";
 import {runDb} from "./repositories/db";
 import {usersRouter} from "./routers/users-router";
+import {authRouter} from "./routers/auth-router";
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -14,6 +15,7 @@ app.use(parserMiddleware);
 app.use('/products', productsRouter);
 app.use('/addresses', addressesRouter);
 app.use('/users', usersRouter);
+app.use('/login', authRouter);
 
 app.get("/",(req: Request, res: Response) => {
 
