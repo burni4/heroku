@@ -15,7 +15,5 @@ authRouter.post('/',
             res.sendStatus(401)
         }
 
-
-
     })
 

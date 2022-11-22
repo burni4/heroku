@@ -14,7 +14,7 @@ productsRouter.post('/',
     inputValidationMiddleware,
     async (req: Request, res: Response) => {
 
-        // req.user._id
+        // req.body.user._id
         if (!req.body.title.trim()) {
             res.status(400).send({message: 'title is require'})
         }
