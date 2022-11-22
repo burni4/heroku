@@ -1,13 +1,21 @@
 import {Request, Response, Router} from "express";
 import {usersService} from "../domain/users-service";
+import {jwtService} from "../application/jwtService";
 
 export const authRouter = Router({})
 authRouter.post('/',
     async (req: Request, res: Response) => {
 
-        const checkResult = await usersService.checkCredentials(req.body.loginOrEmail, req.body.password)
+        const user = await usersService.checkCredentials(req.body.loginOrEmail, req.body.password)
 
-        res.status(201).send(checkResult);
+        if(user){
+            const token = await jwtService.createJWT(user)
+            res.status(201).send(token)
+        }else{
+            res.sendStatus(401)
+        }
+
+
 
     })
 

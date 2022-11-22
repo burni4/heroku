@@ -1,4 +1,9 @@
 
+export type UserDBType = {
+    _id: string
+    login: string
+}
+
 export const usersRepositoryInDB = {
 
     async createProduct(newUser: any): Promise<any>{
