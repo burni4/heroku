@@ -5,6 +5,7 @@ import {addressesRouter} from "./routers/addresses-router";
 import {runDb} from "./repositories/db";
 import {usersRouter} from "./routers/users-router";
 import {authRouter} from "./routers/auth-router";
+import {emailRouter} from "./routers/email-rputer";
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -16,6 +17,7 @@ app.use('/products', productsRouter);
 app.use('/addresses', addressesRouter);
 app.use('/users', usersRouter);
 app.use('/login', authRouter);
+app.use('/email', emailRouter);
 
 app.get("/",(req: Request, res: Response) => {
 
