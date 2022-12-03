@@ -21,6 +21,12 @@ authRouter.post('/registration',
 
         const user = await usersService.createUser(req.body.login, req.body.email, req.body.password)
 
-        res.status(201).send()
+        if (user){
+            res.status(201).send()
+        }else {
+            res.status(500).send()
+        }
+
+
 
     })

@@ -3,6 +3,7 @@ import {ObjectId} from "mongodb";
 import {usersRepositoryInDB} from "../repositories/users-repository-db";
 import {v4 as uuidv4} from 'uuid';
 import add from 'date-fns/add'
+import {emailMahager} from "../managers/email-managers";
 
 export const usersService = {
     async findUserByID(userID: string | null | ObjectId) {
@@ -27,8 +28,16 @@ export const usersService = {
                 isConfirmed: false
             }
         }
+        const result = usersRepositoryInDB.createProduct(newUser)
+        try{
+            await emailMahager.sendEmailConfirmationMessage(newUser)
+        } catch (error){
+            console.error(error)
+            await usersRepositoryInDB.deleteUser(newUser._id.toString())
+            return null
+        }
 
-        return usersRepositoryInDB.createProduct(newUser)
+        return newUser
     },
 
     async checkCredentials(loginOrEmail: string, password: string) {
