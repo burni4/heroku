@@ -54,5 +54,16 @@ export const usersService = {
     async generateHash(password: string, salt: string) {
         const hash = await bcrypt.hash(password, salt)
         return hash
-    }
+    },
+
+    async confirmEmail(code: string, email: string) {
+        let user = await usersRepositoryInDB.findByLoginOrEmail(email)
+        if(!user) return false
+        if (user.emailConfirmation.confirmationCode === code
+        && user.emailConfirmation.expirationDate > new Date()){
+            let result = await usersRepositoryInDB.updateConfirmation(user._id)
+            return result
+        }
+        return false
+    },
 }
