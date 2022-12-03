@@ -58,6 +58,7 @@ export const usersService = {
 
     async confirmEmail(code: string, email: string) {
         let user = await usersRepositoryInDB.findByLoginOrEmail(email)
+        // findUserByConfirmationCode
         if(!user) return false
         if (user.emailConfirmation.confirmationCode === code
         && user.emailConfirmation.expirationDate > new Date()){

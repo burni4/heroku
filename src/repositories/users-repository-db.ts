@@ -17,6 +17,10 @@ export const usersRepositoryInDB = {
         //const user = await  usersCollections.findOne({$or: [{email: LoginOrEmail}, {userName: LoginOrEmail}]})
         return 1
     },
+    async findUserByConfirmationCode(code: string): Promise<any>{
+        await productsCollection.findOne({'emailConfirmation.confirmationCode': code})
+        return 1
+    },
     async updateConfirmation(id: any): Promise<any>{
         let reslt = await  productsCollection
             .updateOne({id: id},{$set:{'emailConfirmation.isConfirmed': true}})
