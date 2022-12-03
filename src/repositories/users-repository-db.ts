@@ -1,3 +1,4 @@
+import {productsCollection} from "./db";
 
 export type UserDBType = {
     _id: string
@@ -16,8 +17,9 @@ export const usersRepositoryInDB = {
         //const user = await  usersCollections.findOne({$or: [{email: LoginOrEmail}, {userName: LoginOrEmail}]})
         return 1
     },
-    async updateConfirmation(id: string): Promise<any>{
-        //const user = await  usersCollections.findOne({$or: [{email: LoginOrEmail}, {userName: LoginOrEmail}]})
-        return 1
+    async updateConfirmation(id: any): Promise<any>{
+        let reslt = await  productsCollection
+            .updateOne({id: id},{$set:{'emailConfirmation.isConfirmed': true}})
+        return reslt.modifiedCount === 1
     }
 }
