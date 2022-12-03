@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt'
 import {ObjectId} from "mongodb";
 import {usersRepositoryInDB} from "../repositories/users-repository-db";
+import {v4 as uuidv4} from 'uuid';
+import add from 'date-fns/add'
 
 export const usersService = {
     async findUserByID(userID: string | null | ObjectId) {
@@ -12,11 +14,18 @@ export const usersService = {
 
         const newUser = {
             _id: new ObjectId(),
-            userName: login,
-            email,
-            passwordHash,
-            passwordSalt,
-            createdAt: new Date()
+            accountData: {
+                userName: login,
+                email,
+                passwordHash,
+                passwordSalt,
+                createdAt: new Date()
+            },
+            emailConfirmation: {
+                confirmationCode: uuidv4(),
+                expirationDate: add(new Date(), {hours: 1, minutes: 3}),
+                isConfirmed: false
+            }
         }
 
         return usersRepositoryInDB.createProduct(newUser)

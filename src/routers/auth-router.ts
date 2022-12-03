@@ -16,4 +16,11 @@ authRouter.post('/',
         }
 
     })
+authRouter.post('/registration',
+    async (req: Request, res: Response) => {
 
+        const user = await usersService.createUser(req.body.login, req.body.email, req.body.password)
+
+        res.status(201).send()
+
+    })

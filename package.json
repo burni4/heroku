@@ -4,14 +4,17 @@
   "main": "src/index.ts",
   "license": "MIT",
   "dependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/nodemailer": "^6.4.6",
+    "@types/uuid": "^9.0.0",
     "bcrypt": "^5.1.0",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.11.0",
     "node-gyp": "^9.3.0",
-    "nodemailer": "^6.8.0"
+    "nodemailer": "^6.8.0",
+    "uuid": "^9.0.0"
   },
   "scripts": {
     "dev": "nodemon --inspect dist/index.js",
